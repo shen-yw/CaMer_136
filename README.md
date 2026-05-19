@@ -1,3 +1,2 @@
-# CaMer
-Risk-Guided Token Merging and Shadow
-Calibration for Real-Time Video Shadow Detection
+# EffiVSD
+Risk-Guided Token Merging for Efficient Video Shadow Detection
