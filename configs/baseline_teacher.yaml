@@ -1,0 +1,47 @@
+model:
+  backbone:
+    train_policy: last_n_blocks
+    train_last_n_blocks: 8
+    out_indices: [2, 5, 8, 11]
+  fusion:
+    variant: context_attn
+    kernel_size: 3
+    use_residual: true
+    use_gating: true
+    num_layers_per_scale: 1
+    attention_dim: 128
+    attention_heads: 4
+    attention_dropout: 0.0
+  head:
+    decoder_variant: slim_dpt
+    decoder_dim: 256
+    decoder_detail_refine_layers: 1
+    decoder_context_refine_dilation: 2
+    output_dim: 128
+    use_batchnorm: true
+  adaptive:
+    enable_token_merging: false
+    enable_existence_calibration: false
+    runtime_mode: accuracy
+optimizer:
+  best_metric_name: soda_iou
+  save_extra_best_checkpoints: true
+  extra_best_metric_names: [jaccard, ber, s_ber, n_ber, soda_balanced, soda_sber, soda_iou]
+  lambda_bce: 1.0
+  positive_bce_weight: 1.35
+  lambda_dice: 1.0
+  lambda_tversky: 0.4
+  tversky_alpha: 0.45
+  tversky_beta: 0.55
+  lambda_lovasz: 0.2
+  lambda_shadow_body: 0.08
+  lambda_body_aux: 0.0
+  lambda_detail_aux: 0.0
+  lambda_boundary_aux: 0.0
+  lambda_boundary_main: 0.14
+  lambda_temporal_consistency: 0.03
+  lambda_nonshadow_precision: 0.035
+  lambda_dark_negative: 0.08
+  dark_negative_threshold: 0.38
+  dark_negative_boundary_kernel: 9
+  distill_weight: 0.0

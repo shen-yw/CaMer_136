@@ -1,0 +1,90 @@
+model:
+  backbone:
+    train_policy: last_n_blocks
+    train_last_n_blocks: 6
+  head:
+    decoder_variant: decoder_simple
+    decoder_simple_dim: 192
+    decoder_simple_num_dense_sources: 2
+    decoder_simple_sparse_coarse_stride: 2
+    decoder_simple_sparse_temporal_layers: 1
+  adaptive:
+    enable_token_merging: true
+    enable_existence_calibration: true
+    runtime_mode: risk_v1
+    merge_block_indices: []
+    merge_block_index: 6
+    tail_stop_block_index: 9
+    fixed_keep_ratio_is_token_keep: true
+    fixed_keep_ratio: 0.40
+    fixed_keep_ratios: []
+    risk_keep_one_bypass_enabled: true
+    risk_keep_one_bypass_threshold: 0.999
+    risk_persistent_commit_keep_threshold: 0.90
+    risk_persistent_fallback_to_transient: true
+    risk_hard_gate_ratio: 0.0
+    use_size_bias: false
+    risk_inference_fast_path: true
+    use_attention_bias_correction: false
+    use_task_aware_preservation: false
+    use_merge_correction: false
+    use_token_transform_reducer: false
+    use_temporal_consensus_correction: false
+    risk_dynamic_keep_enabled: false
+    risk_dynamic_hard_gate_enabled: false
+    risk_joint_warmup_epochs: 2
+    risk_joint_warmup_keep_ratio: 0.60
+    risk_distill_weight: 0.15
+    risk_distill_boundary_weight: 4.0
+    risk_distill_bce_weight: 1.0
+    risk_distill_dice_weight: 0.75
+    risk_distill_logit_weight: 0.05
+    risk_relative_rank_weight: 0.03
+    risk_relative_rank_ratio: 0.08
+    risk_boundary_loss_weight: 3.0
+    risk_teacher_damage_weight: 6.0
+    risk_teacher_error_weight: 0.05
+    risk_teacher_uncertainty_weight: 0.05
+    risk_teacher_temporal_weight: 0.05
+    risk_teacher_boundary_weight: 0.25
+    risk_teacher_checkpoint: ""
+    lambda_exist: 0.10
+    lambda_exist_negative: 0.05
+    lambda_exist_calibration: 0.05
+optimizer:
+  best_metric_name: soda_balanced
+  save_extra_best_checkpoints: true
+  extra_best_metric_names: [jaccard, ber, s_ber, soda_balanced]
+  lambda_bce: 1.0
+  positive_bce_weight: 1.0
+  lambda_dice: 1.0
+  lambda_tversky: 0.0
+  lambda_lovasz: 0.0
+  lambda_shadow_body: 0.0
+  lambda_body_aux: 0.0
+  lambda_detail_aux: 0.0
+  lambda_boundary_aux: 0.0
+  lambda_boundary_main: 0.05
+  lambda_temporal_consistency: 0.0
+shadow_free_aux:
+  enabled: false
+  dataset_root: ""
+  split_name: train
+  image_dir_name: images
+  clip_length: 4
+  stride: 1
+  image_size: [512, 512]
+  sample_ratio: 0.25
+  batch_size: 0
+  num_workers: -1
+  prefetch_factor: 0
+  persistent_workers: null
+  dummy_mode: false
+  lambda_total: 0.20
+  lambda_zero_mask: 1.0
+  lambda_existence_negative: 0.5
+  lambda_temporal_consistency: 0.1
+  lambda_confidence_suppression: 0.1
+  lambda_easy_risk: 0.05
+  confidence_margin: 0.05
+  easy_risk_score_target: 0.1
